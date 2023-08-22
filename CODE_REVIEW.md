@@ -1,6 +1,6 @@
 
 
-Task 1: Code fixes and review 
+Task 1: Code Fixes and review 
 
     1.ReadingListComponent ts file in  line number:11 : Specified the type of the readingList$ observable as Observable<ReadingListBook[]> for improved type safety.
     2.TotalCountComponent ts file in line number :15 : Empty ngOnInit: Since you don't have any logic in the ngOnInit method, you can consider removing it unless you plan to add initialization logic in the future.
