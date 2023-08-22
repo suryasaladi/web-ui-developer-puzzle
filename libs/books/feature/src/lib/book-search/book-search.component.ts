@@ -59,4 +59,8 @@ export class BookSearchComponent implements OnInit {
       this.store.dispatch(clearSearch());
     }
   }
+
+  onSearch(term:string):void{
+    this.store.dispatch(searchBooks({term}));
+  }
 }
