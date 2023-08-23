@@ -1,3 +1,3 @@
 <ng-container *ngIf="totalUnread$ | async as count">
-  <span matBadge="{{ count }}" matBadgeOverlap="false"> </span>
+  <span *ngIf="getCount(count) > 0" matBadge="{{ getCount(count) }}" matBadgeOverlap="false"> </span>
 </ng-container>

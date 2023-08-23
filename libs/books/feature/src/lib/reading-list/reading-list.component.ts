@@ -15,4 +15,8 @@ export class ReadingListComponent {
   removeFromReadingList(item) {
     this.store.dispatch(removeFromReadingList({ item }));
   }
+
+  isObjectEmpty(obj: any): boolean {
+    return Object.keys(obj).length === 0;
+  }
 }
