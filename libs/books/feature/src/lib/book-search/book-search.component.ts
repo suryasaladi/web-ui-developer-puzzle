@@ -4,11 +4,14 @@ import {
   addToReadingList,
   clearSearch,
   getAllBooks,
+  getReadingList,
   ReadingListBook,
+  removeFromReadingList,
   searchBooks
 } from '@tmo/books/data-access';
 import { FormBuilder } from '@angular/forms';
-import { Book } from '@tmo/shared/models';
+import { Book, ReadingListItem } from '@tmo/shared/models';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'tmo-book-search',
@@ -17,6 +20,11 @@ import { Book } from '@tmo/shared/models';
 })
 export class BookSearchComponent implements OnInit {
   books: ReadingListBook[];
+  readBookList: ReadingListItem[];
+  snackBarMsg = "want to read!";
+  snackAction = "undo";
+  showSnackModal = false;
+  bookInReadList;
 
   searchForm = this.fb.group({
     term: ''
@@ -24,7 +32,8 @@ export class BookSearchComponent implements OnInit {
 
   constructor(
     private readonly store: Store,
-    private readonly fb: FormBuilder
+    private readonly fb: FormBuilder,
+    private snackBar: MatSnackBar
   ) {}
 
   get searchTerm(): string {
@@ -34,6 +43,9 @@ export class BookSearchComponent implements OnInit {
   ngOnInit(): void {
     this.store.select(getAllBooks).subscribe(books => {
       this.books = books;
+      this.store.select(getReadingList).subscribe(readBook => {
+        this.readBookList = readBook;
+       });
     });
   }
 
@@ -45,6 +57,28 @@ export class BookSearchComponent implements OnInit {
 
   addBookToReadingList(book: Book) {
     this.store.dispatch(addToReadingList({ book }));
+    this.showingSnack(book);
+  }
+
+  showingSnack(selectedBook: Book) {
+    this.snackBar.dismiss();
+    this.showSnackModal = true;
+    const snackBarRef =  this.snackBar.open(this.snackBarMsg, this.snackAction,{duration: 3000,});
+    snackBarRef.afterDismissed().subscribe((actionType) => {
+      if (actionType.dismissedByAction) {
+      this.showSnackModal = false;
+        if (this.readBookList.length) {
+          const bookInReadList = this.readBookList.find((b: ReadingListItem) => b.bookId === selectedBook.id);
+          if (bookInReadList !== undefined) {
+            this.removeFromReadingList(bookInReadList);
+          }
+        }
+      }
+    });
+  }
+
+  removeFromReadingList(item) {
+    this.store.dispatch(removeFromReadingList({ item }));
   }
 
   searchExample() {
@@ -58,5 +92,9 @@ export class BookSearchComponent implements OnInit {
     } else {
       this.store.dispatch(clearSearch());
     }
+  }
+
+  onSearch(term:string):void{
+    this.store.dispatch(searchBooks({term}));
   }
 }

@@ -6,6 +6,7 @@
       type="search"
       placeholder="Search for books to add to your reading list"
       formControlName="term"
+      (input)="onSearch($event.target.value)"
     />
     <button mat-icon-button matSuffix>
       <mat-icon>search</mat-icon>
@@ -53,4 +54,15 @@
       >".
     </p>
   </div>
+</ng-template>
+<ng-template>
+<mat-form-field>
+  <mat-label>Message</mat-label>
+  <input matInput value="{{snackBarMsg}}">
+</mat-form-field>
+
+<mat-form-field>
+  <mat-label>Action</mat-label>
+  <input matInput value="{{snackAction}}">
+</mat-form-field>
 </ng-template>

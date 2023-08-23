@@ -26,3 +26,15 @@
 <ng-template #empty>
   <p class="empty">You haven't added any books to your reading list yet.</p>
 </ng-template>
+
+<ng-template *ngIf="showSnackModal">
+  <mat-form-field>
+    <mat-label>Message</mat-label>
+    <input matInput value="{{snackBarMsg}}">
+  </mat-form-field>
+  
+  <mat-form-field>
+    <mat-label>Action</mat-label>
+    <input matInput value="{{snackAction}}">
+  </mat-form-field>
+  </ng-template>
