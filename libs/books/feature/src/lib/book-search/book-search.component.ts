@@ -3,7 +3,9 @@ import { Store } from '@ngrx/store';
 import {
   addToReadingList,
   clearSearch,
+  finishFromReadingList,
   getAllBooks,
+  getReadingList,
   ReadingListBook,
   searchBooks
 } from '@tmo/books/data-access';
@@ -17,6 +19,7 @@ import { Book } from '@tmo/shared/models';
 })
 export class BookSearchComponent implements OnInit {
   books: ReadingListBook[];
+  item: any;
 
   searchForm = this.fb.group({
     term: ''
@@ -34,6 +37,8 @@ export class BookSearchComponent implements OnInit {
   ngOnInit(): void {
     this.store.select(getAllBooks).subscribe(books => {
       this.books = books;
+    });
+    this.store.select(getReadingList).subscribe(readList => {
     });
   }
 

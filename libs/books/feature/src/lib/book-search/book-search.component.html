@@ -37,7 +37,7 @@
               (click)="addBookToReadingList(b)"
               [disabled]="b.isAdded"
             >
-              Want to Read
+            {{ finished ? 'Finished' : 'Want to Read' }}
             </button>
           </div>
         </div>
@@ -53,4 +53,15 @@
       >".
     </p>
   </div>
+</ng-template>
+<ng-template>
+<mat-form-field>
+  <mat-label>Message</mat-label>
+  <input matInput value="{{snackBarMsg}}">
+</mat-form-field>
+
+<mat-form-field>
+  <mat-label>Action</mat-label>
+  <input matInput value="{{snackAction}}">
+</mat-form-field>
 </ng-template>
