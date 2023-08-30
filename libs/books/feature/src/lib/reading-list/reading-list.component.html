@@ -11,7 +11,7 @@
        </div>
      </div>
      <div>
-      <button mat-button (click)="markAsFinished(b)">Mark as Finished</button>
+      <button mat-button (click)="markAsFinished(b)" [innerText]="buttonText[b.bookId] || 'Mark as finished'"></button>
       <p *ngIf="b.finished">{{ b.finishedDate }}</p>
     </div>
      <div>

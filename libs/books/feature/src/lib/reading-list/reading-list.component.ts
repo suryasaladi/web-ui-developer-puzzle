@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { finishFromReadingList, getReadingList, markAsFinished, removeFromReadingList } from '@tmo/books/data-access';
 import { ReadingListItem } from '@tmo/shared/models';
-// import * as ReadingListActions from '';
 
 @Component({
   selector: 'tmo-reading-list',
@@ -13,6 +12,7 @@ export class ReadingListComponent implements OnInit {
   readingList$ = this.store.select(getReadingList);
   item:any
   showDateTime: any;
+  buttonText: { [key: string]: string } = {};
 
   constructor(private readonly store: Store) {}
 
@@ -29,7 +29,7 @@ export class ReadingListComponent implements OnInit {
   }
 
  markAsFinished(book: ReadingListItem) {
+  this.buttonText[book.bookId] = 'Finished';
   this.store.dispatch(markAsFinished({ bookId: book.bookId }));
-  
 }
 }
