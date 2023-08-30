@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { finishFromReadingList, getReadingList, removeFromReadingList } from '@tmo/books/data-access';
+import { finishFromReadingList, getReadingList, markAsFinished, removeFromReadingList } from '@tmo/books/data-access';
+import { ReadingListItem } from '@tmo/shared/models';
+// import * as ReadingListActions from '';
 
 @Component({
   selector: 'tmo-reading-list',
@@ -10,6 +12,7 @@ import { finishFromReadingList, getReadingList, removeFromReadingList } from '@t
 export class ReadingListComponent implements OnInit {
   readingList$ = this.store.select(getReadingList);
   item:any
+  showDateTime: any;
 
   constructor(private readonly store: Store) {}
 
@@ -25,8 +28,8 @@ export class ReadingListComponent implements OnInit {
     return Object.keys(obj).length === 0;
   }
 
-  finishFromReadingList(item) {
-  //  location.reload();
-    this.store.dispatch(finishFromReadingList({item}));    
-  }
+ markAsFinished(book: ReadingListItem) {
+  this.store.dispatch(markAsFinished({ bookId: book.bookId }));
+  
+}
 }

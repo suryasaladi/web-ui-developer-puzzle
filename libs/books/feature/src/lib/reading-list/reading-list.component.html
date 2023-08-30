@@ -11,8 +11,9 @@
        </div>
      </div>
      <div>
-      <button mat-button (click)="finishFromReadingList(b)">Finish</button>
-     </div>
+      <button mat-button (click)="markAsFinished(b)">Mark as Finished</button>
+      <p *ngIf="b.finished">{{ b.finishedDate }}</p>
+    </div>
      <div>
        <button
          mat-icon-button

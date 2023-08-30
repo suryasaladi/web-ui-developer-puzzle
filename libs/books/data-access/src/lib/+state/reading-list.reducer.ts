@@ -55,7 +55,38 @@ const readingListReducer = createReducer(
   ),
   on(ReadingListActions.finishFromReadingList, (state, action) =>
     readingListAdapter.removeOne(action.item.bookId, state)
-  )
+  ),
+  on(ReadingListActions.markAsFinished, (state, { bookId }) => {
+    const updatedEntities = { ...state.entities };
+    const bookToUpdate = updatedEntities[bookId];
+  
+    if (bookToUpdate) {
+      const updatedBook = {
+        ...bookToUpdate,
+        finished: true,
+        finishedDate: new Date().toISOString(),
+      };
+  
+      const options: Intl.DateTimeFormatOptions = {
+        day: 'numeric',
+        month: 'short',
+        year: 'numeric',
+        hour: 'numeric',
+        minute: 'numeric',
+        hour12: true,
+      };
+      const formattedFinishedDate = new Intl.DateTimeFormat('en-US', options).format(new Date(updatedBook.finishedDate));
+  
+      updatedBook.finishedDate = formattedFinishedDate;
+  
+      updatedEntities[bookId] = updatedBook;
+    }
+  
+    return {
+      ...state,
+      entities: updatedEntities,
+    };
+  })
 );
 
 export function reducer(state: State | undefined, action: Action) {
