@@ -36,6 +36,7 @@
               color="primary"
               (click)="addBookToReadingList(b)"
               [disabled]="b.isAdded"
+              (input)="onSearch($event.target.value)"
             >
             {{ finished ? 'Finished' : 'Want to Read' }}
             </button>
